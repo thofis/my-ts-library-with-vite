@@ -1,7 +1,7 @@
 import {resolve} from 'path'
 import {defineConfig} from 'vite'
 import dts from 'vite-plugin-dts'
-// @ts-ignore
+// @ts-expect-error vite-plugin-eslint has no type definitions available
 import eslintPlugin from "vite-plugin-eslint"
 
 export default defineConfig({
@@ -13,7 +13,14 @@ export default defineConfig({
         },
     },
     plugins: [
-        dts(),
+        dts({
+            exclude: [
+                '**/*.test.ts',
+                '**/test/**',
+                '**/tests/**',
+                '**/__tests__/**'
+            ]
+        }),
         eslintPlugin(),
     ],
 })
